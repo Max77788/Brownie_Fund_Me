@@ -1,15 +1,21 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity ^0.8.7;
-import "@chainlink/contracts/src/v0.6/interfaces/AggregatorV3Interface.sol";
+pragma solidity ^0.6.6;
 
-contract FundMe {
+import "@chainlink/contracts/src/v0.6/interfaces/AggregatorV3Interface.sol";
+import "@chainlink/contracts/src/v0.6/vendor/SafeMathChainlink.sol";
+
+contract FundMeOld {
+    using SafeMathChainlink for uint256;
 
     mapping(address => uint256) public addressToAmountFunded;
     address[] public funders;
     address public owner;
-    AggregatorV3Interface public immutable priceFeed;
-
+    AggregatorV3Interface public priceFeed;
+    
+    // if you're following along with the freecodecamp video
+    // Please see https://github.com/PatrickAlphaC/fund_me
+    // to get the starting solidity contract code, it'll be slightly different than this!
     constructor(address _priceFeed) public {
         priceFeed = AggregatorV3Interface(_priceFeed);
         owner = msg.sender;
@@ -61,7 +67,7 @@ contract FundMe {
     }
 
     function withdraw() public payable onlyOwner {
-        payable(msg.sender).transfer(address(this).balance);
+        msg.sender.transfer(address(this).balance);
 
         for (
             uint256 funderIndex = 0;
