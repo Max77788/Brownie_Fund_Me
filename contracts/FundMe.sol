@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity ^0.8.7;
+pragma solidity ^0.6.0;
 import "@chainlink/contracts/src/v0.6/interfaces/AggregatorV3Interface.sol";
 
 contract FundMe {
@@ -47,7 +47,7 @@ contract FundMe {
 
     function getEntranceFee() public view returns (uint256) {
         // minimumUSD
-        uint256 minimumUSD = 50 * 10**18;
+        uint256 minimumUSD = 10 * 10**18;
         uint256 price = getPrice();
         uint256 precision = 1 * 10**18;
         // return (minimumUSD * precision) / price;
